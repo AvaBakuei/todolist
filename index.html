@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="main">
+        <!-- Modal -->
+        <div id="my-modal" class="modal">
+            <div class="modal-content">
+                <span class="close fa fa-close"></span>
+                <video controls id="modal-video" autoplay loop></video>
+            </div>
+       </div>
+        <!-- Todo List -->
+        <div class="todo">
+            <h1>Todo List</h1>
+            <input type="text" placeholder="Add new Todo" id="input" onkeypress="addInputKeyPress(event)"/>
+            <button class="add" onclick="addTodo()">Add</button>
+            <ul class="todo-list"></ul>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
