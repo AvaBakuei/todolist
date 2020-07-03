@@ -1,11 +1,16 @@
 let ul = document.querySelector('.todo-list');
 let mainInput = document.getElementById('input');
-let ID = 0;
 let listItem = [];
+
+function createId () {
+    return x = '_' + Math.random().toString(36).substr(2, 9);
+};
+let ID = +new Date;
 
 function addTodoBtnClicked() {
     let inputValue =  mainInput.value;
     addTodo(inputValue);
+    storeData(inputValue);
 }
 
 window.onload = () => {    
@@ -19,20 +24,23 @@ window.onload = () => {
     }
 }
 
+// local storage
+function storeData(inputValue) {
+    listItem.push({text: inputValue});
+    localStorage.setItem('todolist', JSON.stringify(listItem))
+    console.log(listItem)
+}
+
 function addTodo(inputValue)  {    
     let li = document.createElement('li');
     li.className = 'item';
-    li.id = 'item-' + ID++;
+    li.id = 'item-' + ID;
     let content = document.createElement('div');
     content.className = 'text'
     content.textContent = inputValue;
     li.appendChild(content);
     if(inputValue.trim().length !== 0) {
-        ul.append(li);
-
-        // local storage
-        listItem.push({text: inputValue});
-        localStorage.setItem('todolist', JSON.stringify(listItem))
+        ul.append(li);        
     }
     mainInput.value = '';    
 
@@ -131,5 +139,6 @@ function addInputKeyPress(event) {
     if(event.key === 'Enter' || event.keyCode === 13) {        
         let inputValue =  mainInput.value;
         addTodo(inputValue); 
+        storeData(inputValue);
     }
 }
