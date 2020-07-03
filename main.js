@@ -1,14 +1,25 @@
 let ul = document.querySelector('.todo-list');
+let mainInput = document.getElementById('input');
 let ID = 0;
 let listItem = [];
 
-if (localStorage.getItem('todolist')) {
-    listItem = JSON.parse(localStorage.getItem('todolist'));
+function addTodoBtnClicked() {
+    let inputValue =  mainInput.value;
+    addTodo(inputValue);
 }
 
-function addTodo()  {
-    let input = document.getElementById('input');
-    let inputValue =  input.value;
+window.onload = () => {    
+    if(localStorage.getItem('todolist')) {
+        listItem = JSON.parse(localStorage.getItem('todolist'));
+        if(Array.isArray(listItem)) {
+            listItem.map((item)=>{
+                addTodo(item.text);
+            })
+        }
+    }
+}
+
+function addTodo(inputValue)  {    
     let li = document.createElement('li');
     li.className = 'item';
     li.id = 'item-' + ID++;
@@ -22,9 +33,8 @@ function addTodo()  {
         // local storage
         listItem.push({text: inputValue});
         localStorage.setItem('todolist', JSON.stringify(listItem))
-        console.log(listItem)
     }
-    input.value = '';    
+    mainInput.value = '';    
 
     // create 'Edit' span and append in li
     let editBtn = document.createElement('span');
@@ -78,7 +88,7 @@ function addTodo()  {
     // call API    
     let items = document.getElementsByClassName('item').length;
     if(items % 5 === 0) {
-        input.disabled = true;
+        mainInput.disabled = true;
 
         let modal = document.getElementById("my-modal");
         let span = document.querySelector(".close");
@@ -110,7 +120,7 @@ function addTodo()  {
         // hide modal
         function closeModal(){
             modal.style.display = "none";
-            input.disabled = false;
+            mainInput.disabled = false;
         }
       
     }
@@ -118,7 +128,8 @@ function addTodo()  {
 }
 
 function addInputKeyPress(event) {
-    if(event.key === 'Enter' || event.keyCode === 13) {
-        addTodo(); 
+    if(event.key === 'Enter' || event.keyCode === 13) {        
+        let inputValue =  mainInput.value;
+        addTodo(inputValue); 
     }
 }
