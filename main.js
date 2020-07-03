@@ -2,15 +2,15 @@ let ul = document.querySelector('.todo-list');
 let mainInput = document.getElementById('input');
 let listItem = [];
 
-function createId () {
-    return x = '_' + Math.random().toString(36).substr(2, 9);
-};
-let ID = +new Date;
+function generateRandomID(){
+   return 'item-' + (+new Date());
+}
 
 function addTodoBtnClicked() {
     let inputValue =  mainInput.value;
-    addTodo(inputValue);
-    storeData(inputValue);
+    let id = generateRandomID();    
+    addTodo(inputValue,id);
+    storeData(inputValue, id);
 }
 
 window.onload = () => {    
@@ -18,23 +18,23 @@ window.onload = () => {
         listItem = JSON.parse(localStorage.getItem('todolist'));
         if(Array.isArray(listItem)) {
             listItem.map((item)=>{
-                addTodo(item.text);
+                addTodo(item.text, item.id);
             })
         }
     }
 }
 
 // local storage
-function storeData(inputValue) {
-    listItem.push({text: inputValue});
+function storeData(inputValue, id) {
+    listItem.push({id:id, text: inputValue});
     localStorage.setItem('todolist', JSON.stringify(listItem))
     console.log(listItem)
 }
 
-function addTodo(inputValue)  {    
+function addTodo(inputValue, id)  {    
     let li = document.createElement('li');
     li.className = 'item';
-    li.id = 'item-' + ID;
+    li.id = id;
     let content = document.createElement('div');
     content.className = 'text'
     content.textContent = inputValue;
@@ -138,7 +138,8 @@ function addTodo(inputValue)  {
 function addInputKeyPress(event) {
     if(event.key === 'Enter' || event.keyCode === 13) {        
         let inputValue =  mainInput.value;
-        addTodo(inputValue); 
-        storeData(inputValue);
+        let id = generateRandomID(); 
+        addTodo(inputValue,id); 
+        storeData(inputValue, id);
     }
 }
