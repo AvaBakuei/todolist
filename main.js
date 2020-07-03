@@ -91,6 +91,8 @@ function addTodo(inputValue, id)  {
         let id = btnId.split('remove-')[1];
         let parent = document.getElementById(id);
         parent.remove();
+        listItem = listItem.filter(item => item.id !== id);
+        localStorage.setItem('todolist', JSON.stringify(listItem));
     }
 
     // call API    
